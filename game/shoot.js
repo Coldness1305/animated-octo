@@ -61,12 +61,18 @@ function player_collision()
     var x = player1.graphic.position.x + WIDTH / 2;
     var y = player1.graphic.position.y + HEIGHT / 2;
 
-    if ( x > WIDTH )
-        player1.graphic.position.x -= x - WIDTH;
+    if ( x > WIDTH ) {
+        console.log("old X:" + player1.graphic.position.x);
+        player1.graphic.position.x = WIDTH/2;
+    }
+    if ( x < 0 ) {
+        player1.graphic.position.x = -WIDTH/2;
+    }
     if ( y < 0 )
         player1.graphic.position.y -= y;
     if ( y > HEIGHT )
         player1.graphic.position.y -= y - HEIGHT;
+    // console.log("X:" + player1.graphic.position.x + " Y:" +  player1.graphic.position.y);
 
 }
 
@@ -82,19 +88,20 @@ function player_falling()
 
     for (var i = 0; i < length; i++) {
         element = noGround[i];
-
-        var tileX = (element[0]) | 0;
-        var tileY = (element[1]) | 0;
-        var mtileX = (element[0] + sizeOfTileX) | 0;
-        var mtileY = (element[1] + sizeOfTileY) | 0;
-
+        if (element != undefined) {
+            var tileX = (element[0]) | 0;
+            var tileY = (element[1]) | 0;
+            var mtileX = (element[0] + sizeOfTileX) | 0;
+            var mtileY = (element[1] + sizeOfTileY) | 0;
+        }
         if ((x > tileX)
             && (x < mtileX)
             && (y > tileY) 
             && (y < mtileY))
         {
-           player1.dead();
+            player1.dead();
         }
+        
     }
 
 }

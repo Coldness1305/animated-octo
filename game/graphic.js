@@ -25,9 +25,12 @@ function init()
     noGround = [];
     ground = new Ground(0xffffff, WIDTH, HEIGHT, 10);
     
-    player1 = new Player("player1", 0xffff00, new THREE.Vector2(50, 0), 0);
+    player1 = new Player("player1", 0xffff00, new THREE.Vector2(0, 0), 0);
     scene.add(player1.graphic);
 
+    enemy = new Enemy("badBoi", 0xff00ff, new THREE.Vector2(200, 200), 0);
+    scene.add(enemy.graphic);
+    
     light1 = new Light("sun", 0xffffff, "0,0,340");
     scene.add(light1);
 }
@@ -48,7 +51,15 @@ function Ground(color, size_x, size_y, nb_tile)
         for (y = minY; y <= maxY; y = y+sizeOfTileY){
 
             color = colors[Math.floor(Math.random()*colors.length)];
-       
+
+            // Adding middle ground
+            middleGround = new THREE.Mesh(
+                new THREE.PlaneGeometry(sizeOfTileX-10, sizeOfTileY-10),
+                new THREE.MeshLambertMaterial({color: color, transparent: true, opacity: 0.6}));
+            middleGround.position.x = 0;
+            middleGround.position.y = 0;
+            scene.add(middleGround);
+
             if (0x000000 != color)
             {
                 tmpGround = new THREE.Mesh(
@@ -66,7 +77,7 @@ function Ground(color, size_x, size_y, nb_tile)
 
 function Light(name, color, position)
 {
-    pointLight = new THREE.PointLight(color, 50, 350);
+    pointLight = new THREE.PointLight(color, 10000, 10000);
 
     pointLight.position.x = position.split(',')[0];
     pointLight.position.y = position.split(',')[1];
