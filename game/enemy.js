@@ -12,13 +12,21 @@ var Enemy = function(name, color, position, direction) {
 
     var singleGeometry = new THREE.Geometry();
 
-    vehiculeMesh = new THREE.BoxGeometry(5, 20, 32);
+    vehiculeMesh = new THREE.ConeGeometry(5, 20, 32);
     this.graphic = new THREE.Mesh(vehiculeMesh, this.material);
     this.graphic.position.z = 6;
 
     this.graphic.rotateOnAxis(new THREE.Vector3(0,0,1), this.direction+(Math.PI/2));
 };
 
+Enemy.prototype.dead = function () {
+    this.graphic.position.z = this.graphic.position.z-0.1;
+        //Nettoyage de la div container
+        $("#container").html("");
+        jQuery('#'+this.name+' >.life').text("Enemy is dead!");
+        init();
+}
+
 Enemy.prototype.displayInfo = function () {
-    jQuery('#'+this.name+' >.life').text(this.life);
+    jQuery('#'+this.name+' >.life').text("Enemy HP " + this.life);
 }
