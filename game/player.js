@@ -47,7 +47,11 @@ Player.prototype.decelerate = function (distance) {
 };
 
 Player.prototype.displayInfo = function () {
-    jQuery('#'+this.name+' >.life').text("Player HP " + this.life);
+    jQuery('#'+this.name+' >.life').text(this.life);
+}
+
+Player.prototype.loseLife = function () {
+    this.life -= 1;
 }
 
 Player.prototype.turnRight = function (angle) {
